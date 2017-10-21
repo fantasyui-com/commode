@@ -1,0 +1,20 @@
+{
+  "name": "commode",
+  "version": "1.0.0",
+  "description": "Electron-Vue based, iTunes like UI, for file tagging, restructuring, processing, and general management.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fantasyui-com/commode.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fantasyui-com/commode/issues"
+  },
+  "homepage": "https://github.com/fantasyui-com/commode#readme"
+}

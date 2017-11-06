@@ -6,6 +6,8 @@ new Vue({
   el: '#primary',
 
   data: {
+    title:'',
+    subtitle:'',
     filter: i=> i.power >= 8000,
     filters: [],
     db: [],
@@ -32,10 +34,14 @@ new Vue({
 
     select:  function (e) {
       this.filter = e.filter;
+      this.title = e.name;
+
     },
 
     deselect:  function (e) {
+      this.title = 'All Items';
       this.filter = i => true;
+
     },
 
     update:  function (e) {

@@ -2,6 +2,9 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
+//          $('#exampleModal').modal({})
+
+
 new Vue({
   el: '#primary',
 
@@ -32,10 +35,13 @@ new Vue({
 
   methods: {
 
+    filtersModal:  function (e) {
+      $('#filtersModal').modal({})
+    },
+
     select:  function (e) {
       this.filter = e.filter;
       this.title = e.name;
-
     },
 
     deselect:  function (e) {
@@ -48,10 +54,12 @@ new Vue({
 
 
         [
+
           { name: 'Radio',      filter: i => i.tags.indexOf('Radio')!= -1 },
           { name: 'Audiobooks', filter: i => i.tags.indexOf('Audiobook')!=-1 },
           { name: 'Music',      filter: i => i.tags.indexOf('Music')!= -1 },
           { name: 'Movies',     filter: i => i.tags.indexOf('Movies')!=-1 },
+
         ].forEach( i => this.filters.push(i) );
 
         [

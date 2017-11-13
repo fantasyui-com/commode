@@ -4,26 +4,17 @@
 
 //          $('#exampleModal').modal({})
 
+const naturalComparator = require('natural-compare');
 
+function naturalCompare(a,b){
 
+  let A = a.name.toUpperCase();
+  let B = b.name.toUpperCase();
 
+  return naturalComparator(A, B)
 
-// function(a, b) {
-//
-//   var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-//   var nameB = b.name.toUpperCase(); // ignore upper and lowercase
-//
-//   if (nameA < nameB) {
-//     return -1;
-//   }
-//   if (nameA > nameB) {
-//     return 1;
-//   }
-//
-//   // names must be equal
-//   return 0;
-// }
-//
+}
+
 
 
 
@@ -73,7 +64,7 @@ new Vue({
     },
 
     unsort:  function (e) {
-      this.sorter = list => list.sort();
+      this.sorter = list => list.sort(naturalCompare);
     },
 
     select:  function (e) {
@@ -91,8 +82,8 @@ new Vue({
 
         [
 
-          { name: 'Alpha-numeric', sorter: list => list.sort() },
-          { name: 'Alpha',         sorter: list => list.sort() },
+          { name: 'Natural', sorter: list => list.sort(naturalCompare) },
+          { name: 'Letter',  sorter: list => list.sort() },
 
         ].forEach( i => this.sorters.push(i) );
 
@@ -112,7 +103,14 @@ new Vue({
           { name: 'Wanted', tags: ['Movies']},
 
 
+          { name: '1 Sort Test', tags: ['Music']},
+          { name: '10 Sort Test', tags: ['Music']},
+          { name: '2 Sort Test', tags: ['Music']},
+          { name: '20 Sort Test', tags: ['Music']},
+          { name: '101 Sort Test', tags: ['Music']},
+
           { name: 'Wolfsheim - Once In A Lifetime', tags: ['Music']},
+
           { name: 'Depeche Mode - Enjoy The Silence', tags: ['Music']},
           { name: 'Apoptygma Berzerk - Kathy\'s Song', tags: ['Music']},
           { name: 'And One - Wasted', tags: ['Music']},

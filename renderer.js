@@ -5,18 +5,47 @@
 //          $('#exampleModal').modal({})
 
 
+
+
+
+// function(a, b) {
+//
+//   var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+//   var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+//
+//   if (nameA < nameB) {
+//     return -1;
+//   }
+//   if (nameA > nameB) {
+//     return 1;
+//   }
+//
+//   // names must be equal
+//   return 0;
+// }
+//
+
+
+
+
 new Vue({
   el: '#primary',
 
   data: {
     title:'',
     subtitle:'',
-    filter: i=> i.power >= 8000,
+
+    filter: null,
+    sorter: null,
+
     filters: [],
+    sorters: [],
+
     db: [],
   },
 
   created: function () {
+    this.unsort();
     this.deselect();
     this.update();
   },
@@ -28,7 +57,7 @@ new Vue({
     },
 
     computedDatabase: function () {
-      return this.db.filter( this.filter );
+      return this.sorter( this.db.filter( this.filter ) );
     },
 
   },
@@ -39,6 +68,14 @@ new Vue({
       $('#filtersModal').modal({})
     },
 
+    sort:  function (e) {
+      this.sorter = e.sorter;
+    },
+
+    unsort:  function (e) {
+      this.sorter = list => list.sort();
+    },
+
     select:  function (e) {
       this.filter = e.filter;
       this.title = e.name;
@@ -47,11 +84,17 @@ new Vue({
     deselect:  function (e) {
       this.title = 'All Items';
       this.filter = i => true;
-
     },
 
     update:  function (e) {
 
+
+        [
+
+          { name: 'Alpha-numeric', sorter: list => list.sort() },
+          { name: 'Alpha',         sorter: list => list.sort() },
+
+        ].forEach( i => this.sorters.push(i) );
 
         [
 

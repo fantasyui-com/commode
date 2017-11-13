@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/fantasyui-com/commode/issues"
   },
-  "homepage": "https://github.com/fantasyui-com/commode#readme"
+  "homepage": "https://github.com/fantasyui-com/commode#readme",
+  "dependencies": {}
 }

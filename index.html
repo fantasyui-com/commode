@@ -74,7 +74,10 @@
 
 
                   <ul class="list-group">
-                    <li v-for="item in computedDatabase" class="list-group-item " v-on:click="select(item)"><i class="fa fa-foo text-muted"></i>&nbsp; {{ item.name }}</li>
+                    <li v-for="item in computedDatabase" class="list-group-item " v-on:click="select(item)"><i class="fa fa-foo text-muted"></i>&nbsp; {{ item.name }}
+                      <i class="fa fa-cog text-muted float-right"></i>
+                      <span v-for="tag in item.tags" class="badge badge-light float-right">{{tag}}</span>
+                    </li>
                   </ul>
 
 

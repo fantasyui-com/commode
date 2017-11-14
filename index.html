@@ -84,10 +84,25 @@
 
 
                   <ul class="list-group">
+
                     <li v-for="item in computedDatabase" class="list-group-item " v-on:click="select(item)"><i class="fa fa-foo text-muted"></i>&nbsp; {{ item.name }}
                       <i class="fa fa-cog text-muted float-right"></i>
                       <span v-for="tag in item.tags" class="badge badge-light float-right">{{tag}}</span>
+
+
+                      <form>
+                        <div class="row">
+
+                          <div class="col">
+                            <textarea class="form-control" style="font-size: .8rem;" id="exampleFormControlTextarea1" rows="9">{{ JSON.stringify(item, null, '  ') }}</textarea>
+
+                          </div>
+
+                        </div>
+                      </form>
+
                     </li>
+
                   </ul>
 
 

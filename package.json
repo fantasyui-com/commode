@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/fantasyui-com/commode#readme",
   "dependencies": {
-    "natural-compare": "^1.4.0"
+    "natural-sort-by-key": "^1.0.1"
   }
 }

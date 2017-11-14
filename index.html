@@ -47,23 +47,33 @@
 
         </div>
 
+
+
+
+
         <div class="col-md-9">
 
 
             <div class="container-fluid pb-3 d-none d-md-block d-lg-block d-xl-block">
-              <div class="row">
 
+              <div class="row">
                 <div class="col-2">
                   <i class="fa fa-list fa-5x text-muted"></i>
                 </div>
-
                 <div class="col-10">
-
                   <div class="h2">{{title}}</div>
                   <div class="text-muted pl-2 d-inline-block">{{computedDatabase.length}} Item{{computedDatabase.length==1?'':'s'}}</div>
                 </div>
-
               </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="btn-group btn-group-sm float-right" role="group" aria-label="Basic example">
+                    <button v-for="sorter in sorters" v-on:click="sort(sorter)" type="button" class="btn btn-light"><i :class="'fa fa-'+sorter.icon"></i></button>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
 

@@ -4,20 +4,7 @@
 
 //          $('#exampleModal').modal({})
 
-const naturalComparator = require('natural-compare');
-
-function naturalCompare(a,b){
-
-  let A = a.name.toUpperCase();
-  let B = b.name.toUpperCase();
-
-  return naturalComparator(A, B)
-
-}
-
-
-
-
+const byKey = require('natural-sort-by-key');
 
 new Vue({
   el: '#primary',
@@ -64,8 +51,10 @@ new Vue({
     },
 
     unsort:  function (e) {
-      this.sorter = list => list.sort(naturalCompare);
+      this.sorter = list => list.sort(byKey('name'));
     },
+
+
 
     select:  function (e) {
       this.filter = e.filter;
@@ -79,11 +68,9 @@ new Vue({
 
     update:  function (e) {
 
-
         [
-
-          { name: 'Natural', sorter: list => list.sort(naturalCompare) },
-          { name: 'Letter',  sorter: list => list.sort() },
+          { name: 'Natural', icon:'sort-alpha-asc', sorter: list => list.sort(byKey('name')) },
+          { name: 'Reverse', icon:'sort-alpha-desc', sorter: list => list.sort(byKey('name')).reverse() },
 
         ].forEach( i => this.sorters.push(i) );
 

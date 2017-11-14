@@ -19,6 +19,8 @@ new Vue({
     filters: [],
     sorters: [],
 
+    opened:{},
+
     db: [],
   },
 
@@ -45,6 +47,23 @@ new Vue({
     filtersModal:  function (e) {
       $('#filtersModal').modal({})
     },
+
+
+
+    toggle:  function (e) {
+      console.log(e.name)
+      if(this.opened[e.name] === undefined) return Vue.set(this.opened, e.name, true);
+      if(this.opened[e.name] === true) return Vue.set(this.opened, e.name, false);
+      if(this.opened[e.name] === false) return Vue.set(this.opened, e.name, true);
+
+
+
+
+
+    },
+
+
+
 
     sort:  function (e) {
       this.sorter = e.sorter;

@@ -1,6 +1,14 @@
 const path = require('path');
 const byKey = require('natural-sort-by-key');
 
+const EventEmitter = require('events');
+
+class MyEmitter extends EventEmitter {}
+
+const myEmitter = new MyEmitter();
+
+
+
 new Vue({
   el: '#primary',
 
@@ -10,9 +18,14 @@ new Vue({
 
     filter: null,
     sorter: null,
+    status: null,
+
+    selectedItem: null,
+    selectedAction: null,
 
     filters: [],
     sorters: [],
+    actions: [],
 
     opened:{},
 
@@ -57,6 +70,14 @@ new Vue({
 
     },
 
+    selectItem: function (e) {
+      myEmitter.emit('status', `${e.name}`)
+      this.selectedItem = e;
+    },
+    selectAction: function (e) {
+      myEmitter.emit('status', `Selecte ${e.name} Action, press play to apply it to the items below...`)
+      this.selectedAction = e;
+    },
 
 
 
@@ -73,23 +94,31 @@ new Vue({
     select:  function (e) {
       this.filter = e.filter;
       this.title = e.name;
+      myEmitter.emit('status', `Viewing ${this.title}`)
     },
 
     deselect:  function (e) {
       this.title = 'All Items';
       this.filter = i => true;
+      myEmitter.emit('status', `Viewing ${this.title}`)
+
     },
 
     update:  function (e) {
 
+      myEmitter.on('status', message => {
+        this.status = message;
+      });
 
       let dir = path.resolve('./sample-database');
 
+        require(path.join(dir,'action.js')).forEach( i => this.actions.push(i) );
         require(path.join(dir,'sort.js')).forEach( i => this.sorters.push(i) );
         require(path.join(dir,'filter.js')).forEach( i => this.filters.push(i) );
         require(path.join(dir,'data.js')).forEach( i => this.db.push(i) );
 
 
+        myEmitter.emit('status', 'System Ready...')
     },
   }
 

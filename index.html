@@ -39,12 +39,25 @@
              <div class="pr-2 d-inline-block"> <i class="fa fa-fw fa-backward fa-2x text-secondary"></i> </div>
              <div class="p-1 d-inline-block"> <i class="fa fa-fw fa-play fa-3x text-dark"></i> </div>
              <div class="p-1 d-inline-block"> <i class="fa fa-fw fa-forward fa-2x text-secondary"></i> </div>
+
+             <div class="pl-3 mb-2 btn-group btn-group-sm d-inline-block">
+               <button type="button" class="btn btn-fade dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 <i class="fa fa-gears fa-1x text-dark"></i>
+               </button>
+               <div class="dropdown-menu dropdown-menu-sm">
+
+                 <button v-for="action in actions" v-on:click="selectAction(action)" class="dropdown-item" type="button">{{action.name}}</button>
+
+               </div>
+             </div>
+
            </div>
         </div>
 
         <div class="col-4 pt-1">
            <div class="alert alert-secondary text-center mb-0" role="alert">
              <i class="fa fa-paw fa-3x text-dark"></i>
+             <div class="small">{{status}}</div>
            </div>
         </div>
 
@@ -110,7 +123,10 @@
 
                   <ul class="list-group">
 
-                    <li v-for="item in computedDatabase" class="list-group-item"><i class="fa fa-th text-muted"></i>&nbsp; {{ item.name }}
+                    <li v-for="item in computedDatabase" v-on:click="selectItem(item)" class="list-group-item">
+                      <i v-show="selectedItem !== item" class="fa fa-th text-muted"></i>
+                      <i v-show="selectedItem == item" class="fa fa-th text-primary"></i>
+                      &nbsp; {{ item.name }}
 
                       <div v-on:click="toggle(item)" class="float-right"><i class="fa fa-cog text-muted"></i></div>
                       <div class="float-right"> <span v-for="tag in item.tags" class="badge badge-light">{{tag}}</span> </div>

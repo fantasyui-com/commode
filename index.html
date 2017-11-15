@@ -31,16 +31,16 @@
 
     <div class="container-fluid">
 
-      <div class="p-3 bg-light">
+      <div class="pt-3 bg-light">
         <div class="row">
           <div class="col-md-3 pb-3">
 
-            <ul class="nav flex-column">
-              <li v-for="item in computedFilters" class="nav-item" v-on:click="select(item)"><a class="nav-link text-muted" href="#"><i class="fa fa-cog text-muted"></i>&nbsp; {{ item.name }}</a></li>
-              <li class="nav-item" v-on:click="deselect"><a class="nav-link text-muted" href="#"><i class="fa fa-eye text-muted"></i>&nbsp; Show All</a></li>
+            <ul class="nav flex-column pb-2">
+              <li v-for="item in computedFilters" class="nav-item" v-on:click="select(item)"><a class="nav-link text-muted p-0" href="#"><i class="fa fa-cog text-dark"></i>&nbsp; {{ item.name }}</a></li>
+              <li class="nav-item" v-on:click="deselect"><a class="nav-link text-muted p-0" href="#"><i class="fa fa-eye text-dark"></i>&nbsp; Show All</a></li>
             </ul>
 
-            <div class="nav-item" v-on:click="filtersModal"><a class="nav-link text-muted" href="#"><i class="fa fa-pencil text-muted"></i>&nbsp; Edit</a></div>
+            <div class="nav-item" v-on:click="filtersModal"><a class="nav-link text-muted p-0" href="#"><i class="fa fa-pencil text-dark"></i>&nbsp; Edit</a></div>
 
           </div>
 
@@ -57,45 +57,43 @@
                 <div class="col-2">
                   <i class="fa fa-list fa-5x text-muted"></i>
                 </div>
-                <div class="col-10">
-                  <div class="h2">{{title}}</div>
-                  <div class="text-muted pl-2 d-inline-block">{{computedDatabase.length}} Item{{computedDatabase.length==1?'':'s'}}</div>
-                </div>
-              </div>
 
-              <div class="row">
-                <div class="col-12">
-                  <div class="btn-group btn-group-sm float-right" role="group" aria-label="Basic example">
-                    <button v-for="sorter in sorters" v-on:click="sort(sorter)" type="button" class="btn btn-light"><i :class="'fa fa-'+sorter.icon"></i></button>
+                <div class="col-8">
+                  <div class="h4 mb-0">{{title}}</div>
+                  <div class="text-muted pt-0 d-inline-block">{{computedDatabase.length}} Item{{computedDatabase.length==1?'':'s'}}</div>
+                </div>
+
+                <div class="col-2">
+                  <div class="btn-group btn-group-sm float-right" role="group" aria-label="Basic example" >
+                    <button v-for="sorter in sorters" v-on:click="sort(sorter)" type="button" class="btn btn-primary" style="font-size: .7rem;"><i :class="'fa fa-'+sorter.icon"></i></button>
                   </div>
                 </div>
+
               </div>
+
 
             </div>
 
 
             <!-- -->
             <div class="container-fluid">
-              <div class="row">
-                <div class="col-12">
+              <div class="row pb-3">
+                <div class="col-12 p-0">
 
 
                   <ul class="list-group">
 
-                    <li v-for="item in computedDatabase" class="list-group-item"><i class="fa fa-foo text-muted"></i>&nbsp; {{ item.name }}
+                    <li v-for="item in computedDatabase" class="list-group-item"><i class="fa fa-th text-muted"></i>&nbsp; {{ item.name }}
+
                       <div v-on:click="toggle(item)" class="float-right"><i class="fa fa-cog text-muted"></i></div>
                       <div class="float-right"> <span v-for="tag in item.tags" class="badge badge-light">{{tag}}</span> </div>
 
 
                       <form v-show="opened[item.name] === true">
                         <div class="row">
-
                           <div class="col">
-
                             <textarea class="form-control" style="font-size: .8rem;" id="exampleFormControlTextarea1" rows="9">{{ JSON.stringify(item, null, '  ') }}</textarea>
-
                           </div>
-
                         </div>
                       </form>
 

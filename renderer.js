@@ -20,8 +20,8 @@ new Vue({
     sorter: null,
     status: null,
 
-    selectedItem: null,
-    selectedAction: null,
+    selectedItem: {},
+    selectedAction: {},
 
     filters: [],
     sorters: [],
@@ -56,7 +56,28 @@ new Vue({
       $('#filtersModal').modal({})
     },
 
+    play:function (e) {
+      let app = this;
 
+      if(!this.selectedAction.event){
+        return myEmitter.emit('status', 'You must select an action to apply to items below...');
+      }
+
+      let jobs = Promise.resolve();
+      this.computedDatabase.forEach(item => {
+        jobs = jobs.then(i=>new Promise(function(resolve, reject) {
+          let payload = Object.assign({app, item, resolve, reject},item,app.selectedAction.assign);
+          myEmitter.emit(app.selectedAction.event, payload)
+        }));
+
+      });
+      jobs.then(i=>{
+        myEmitter.emit('status', 'Jobs Done...');
+        this.deselectItem()
+        this.deselectAction()
+      })
+
+    },
 
     toggle:  function (e) {
       console.log(e.name)
@@ -74,9 +95,17 @@ new Vue({
       myEmitter.emit('status', `${e.name}`)
       this.selectedItem = e;
     },
+    deselectItem: function (e) {
+      myEmitter.emit('status', ``)
+      this.selectedItem = {};
+    },
+
     selectAction: function (e) {
-      myEmitter.emit('status', `Selecte ${e.name} Action, press play to apply it to the items below...`)
+      myEmitter.emit('status', `Selected ${e.name} Action, press play to apply it to the items below...`)
       this.selectedAction = e;
+    },
+    deselectAction: function (e) {
+      this.selectedAction = {};
     },
 
 
@@ -116,6 +145,8 @@ new Vue({
         require(path.join(dir,'sort.js')).forEach( i => this.sorters.push(i) );
         require(path.join(dir,'filter.js')).forEach( i => this.filters.push(i) );
         require(path.join(dir,'data.js')).forEach( i => this.db.push(i) );
+
+        require(path.join(dir,'work.js'))({emitter:myEmitter})
 
 
         myEmitter.emit('status', 'System Ready...')

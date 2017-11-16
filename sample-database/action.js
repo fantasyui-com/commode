@@ -1,8 +1,8 @@
 module.exports = [
 
-  { name: 'Delete', event:"delete-item", assign:{}},
-  { name: 'Resize', event:"resize-item", assign:{}},
-  { name: 'Downsample', event:"downsample-item", assign:{}},
-  { name: 'Nuke', event:"nuke-item", assign:{}},
+  { name: 'Freeze', icon:'snowflake-o', event:'example', assign:{}},
+  { name: 'Clean', icon:'bath', event:'example', assign:{}},
+  { name: 'PLC', icon:'microchip', event:'example', assign:{}},
+  { name: 'Deposit', icon:'bank', event:'example', assign:{}},
 
 ];

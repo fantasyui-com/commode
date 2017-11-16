@@ -34,41 +34,33 @@
 
       <div class="row" style="border-bottom: 1px solid silver;">
 
-        <div class="col-4 pt-1">
-           <div class="text-center p-3" style="font-size: .6rem;">
-             <div class="pr-2 d-inline-block"> <i class="fa fa-fw fa-backward fa-2x text-secondary"></i> </div>
-             <div class="p-1 d-inline-block"> <i class="fa fa-fw fa-play fa-3x text-dark"></i> </div>
-             <div class="p-1 d-inline-block"> <i class="fa fa-fw fa-forward fa-2x text-secondary"></i> </div>
+        <div class="col-3 pt-3 text-center">
 
-             <div class="pl-3 mb-2 btn-group btn-group-sm d-inline-block">
-               <button type="button" class="btn btn-fade dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 <i class="fa fa-gears fa-1x text-dark"></i>
-               </button>
-               <div class="dropdown-menu dropdown-menu-sm">
 
-                 <button v-for="action in actions" v-on:click="selectAction(action)" class="dropdown-item" type="button">{{action.name}}</button>
+          <div class="btn-group pt-1" role="group" aria-label="Button group with nested dropdown">
+            <button v-on:click="play" type="button" class="btn btn-fade"><i class="fa fa-fw fa-play"></i></button>
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-fade dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-gears fa-1x"></i>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <button v-for="action in actions" v-on:click="selectAction(action)" class="dropdown-item small" type="button"><i :class="'fa fa-fw text-dark fa-'+action.icon"></i> {{action.name}}</button>
+              </div>
+            </div>
+          </div>
 
-               </div>
-             </div>
 
-           </div>
+
         </div>
 
-        <div class="col-4 pt-1">
-           <div class="alert alert-secondary text-center mb-0" role="alert">
-             <i class="fa fa-paw fa-3x text-dark"></i>
+        <div class="col-9 pt-1">
+           <div class="alert alert-secondary text-center mb-1" role="alert">
+             <i :class="'fa fa-3x text-dark fa-'+(selectedAction.icon||'paw')"></i>
              <div class="small">{{status}}</div>
            </div>
         </div>
 
-        <div class="col-4 pt-1">
 
-          <div class="input-group input-group-sm p-3">
-            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-fw fa-search text-dark"></i></span>
-            <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-          </div>
-
-        </div>
       </div>
 
       <div class="pt-3 bg-light">
@@ -76,11 +68,10 @@
           <div class="col-md-3 pb-3">
 
             <ul class="nav flex-column pb-2">
-              <li v-for="item in computedFilters" class="nav-item" v-on:click="select(item)"><a class="nav-link text-muted p-0" href="#"><i class="fa fa-cog text-dark"></i>&nbsp; {{ item.name }}</a></li>
-              <li class="nav-item" v-on:click="deselect"><a class="nav-link text-muted p-0" href="#"><i class="fa fa-eye text-dark"></i>&nbsp; Show All</a></li>
+              <li v-for="item in computedFilters" class="nav-item" v-on:click="select(item)"><a class="nav-link text-muted p-0" style="font-size: 1.2em;" href="#"><i class="fa fa-cog text-dark"></i>&nbsp; {{ item.name }}</a></li>
+              <li class="nav-item" v-on:click="deselect"><a class="nav-link text-muted p-0" style="font-size: 1.2em;" href="#"><i class="fa fa-eye text-dark"></i>&nbsp; Show All</a></li>
             </ul>
-
-            <div class="nav-item" v-on:click="filtersModal"><a class="nav-link text-muted p-0" href="#"><i class="fa fa-pencil text-dark"></i>&nbsp; Edit</a></div>
+            <div class="nav-item" v-on:click="filtersModal"><a class="nav-link text-muted p-0" style="font-size: 1.2em;" href="#"><i class="fa fa-pencil text-dark"></i>&nbsp; Edit</a></div>
 
           </div>
 
@@ -120,18 +111,13 @@
               <div class="row pb-3">
                 <div class="col-12 p-0">
 
-
                   <ul class="list-group">
+                    <li v-for="item in computedDatabase" v-on:click="selectItem(item)" :class="'list-group-item' + ' ' + (selectedItem==item?'active':'')">
 
-                    <li v-for="item in computedDatabase" v-on:click="selectItem(item)" class="list-group-item">
-                      <i v-show="selectedItem !== item" class="fa fa-th text-muted"></i>
-                      <i v-show="selectedItem == item" class="fa fa-th text-primary"></i>
-                      &nbsp; {{ item.name }}
+                      <i class="fa fa-th"></i> &nbsp; {{ item.name }}
 
-                      <div v-on:click="toggle(item)" class="float-right"><i class="fa fa-cog text-muted"></i></div>
+                      <div v-on:click="toggle(item)" class="float-right">&nbsp; <i class="fa fa-cog"></i></div>
                       <div class="float-right"> <span v-for="tag in item.tags" class="badge badge-light">{{tag}}</span> </div>
-
-
                       <form v-show="opened[item.name] === true">
                         <div class="row">
                           <div class="col">
@@ -139,11 +125,8 @@
                           </div>
                         </div>
                       </form>
-
                     </li>
-
                   </ul>
-
 
                 </div>
               </div>
@@ -169,14 +152,12 @@
           </button>
           </div>
           <div class="modal-body">
-
             <form>
               <div class="form-group">
                 <label for="exampleFormControlTextarea1">Example textarea</label>
                 <textarea class="form-control" style="font-size: .8rem;" id="exampleFormControlTextarea1" rows="9">{{ JSON.stringify(filters, function(key, val) { if (typeof val === 'function') { return val + ''; } return val; }, '  ') }}</textarea>
               </div>
             </form>
-
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>

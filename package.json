@@ -1,6 +1,6 @@
 {
   "name": "commode",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Electron-Vue based, iTunes like UI, for file tagging, restructuring, processing, and general management.",
   "main": "main.js",
   "scripts": {
